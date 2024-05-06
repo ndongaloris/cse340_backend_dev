@@ -30,11 +30,17 @@ nav ul{
     display: flex;
     list-style: none;
     background-color: #0f5085;
-    padding: 10px;
     text-align: center;
+}
+nav ul li a{
+    text-decoration: none;
     color: #fff;
 }
+nav ul li:hover{
+    background-color: rgba(128, 128, 128, 0.534);
+}
 nav ul li{
+    padding: 10px;
     display: block;
     flex: 1 1 100%;
 }
