@@ -116,3 +116,21 @@ nav ul li{
     width: 100%;
     margin: 0;
 }
+
+#inv-display{
+    list-style: none;
+}
+#inv-display li{
+    width: 300px;
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+#inv-display li img{
+    justify-self: center;
+    width: 250px;
+    height: 150px;
+}
