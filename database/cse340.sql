@@ -242,5 +242,5 @@ UPDATE inventory
 	WHERE inv_id = 10;
 
 UPDATE inventory 
-	SET inv_image = REPLACE(inv_image, '/images', '/images/vehicules'),
-	inv_thumbnail = REPLACE(inv_thumbnail,'/images', '/images/vehicules' );
+	SET inv_image = REPLACE(inv_image, '/images', '/images/vehicles'),
+	inv_thumbnail = REPLACE(inv_thumbnail,'/images', '/images/vehicles' );
