@@ -59,22 +59,24 @@ Util.buildClassificationGrid = async function(data){
     return grid
 }
 
-// Function to build a single view of inventory data
+/* ************************************************
+* Function to build a single view of inventory data
+* ************************************************* */ 
 Util.BuildSingleView = async function(data) {
     let SingleView; // Variable to hold the single view HTML
     
     // Start building the single view container
-    SingleView = "<div id=SingleView>";
+    SingleView = "<div id=singleView>";
     
     // Loop through each vehicle in the data
     data.forEach(vehicle => {
         // Add the vehicle picture section
-        SingleView += "<div id=SinglePicture>";
+        SingleView += "<div id=singleViewPicture>";
         SingleView += '<img src="' + vehicle.inv_thumbnail +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model +' on CSE Motors"/>';
         SingleView += "</div>";
         
         // Add the vehicle details section
-        SingleView += "<div id=SinglePicture>";
+        SingleView += "<div id=SingleViewInfo>";
         SingleView += "<h3>" + vehicle.inv_make + ' '+ vehicle.inv_model + " Details </h3>";
         SingleView += "<p><strong>Price:</strong> " + ' ' + vehicle.inv_price + "</p>";
         SingleView += "<p><strong>Description:</strong> " + ' ' + vehicle.inv_description + "</p>";
