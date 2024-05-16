@@ -15,6 +15,7 @@ const inventoryRoute = require("./routes/inventoryRoute");
 const baseController = require("./controllers/baseController");
 const session = require("express-session");
 const pool = require('./database/');
+const accountRoute = require("./routes/accountRoute");
 /* ***********************
  * View Engine and Templates
  *************************/
@@ -54,12 +55,13 @@ app.use(static);
  *************************/
 app.get("/", utilities.handleErrors(baseController.buildHome));
 // Inventory routes
-app.use("/inv", inventoryRoute)
-app.use("/serverError", inventoryRoute)
+app.use("/inv", inventoryRoute);
+app.use("/serverError", inventoryRoute);
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({status: 404, message: "404 - you really are good at getting lost, aren't you?"})
-})
+});
+app.use("/account", accountRoute);
 
 /* ***********************
 * Express Error Handler

@@ -1,8 +1,8 @@
 // Needed Resources 
 const express = require("express");
 const router = new express.Router();
-const accControler = require("../controllers/accController");
+const accountControler = require("../controllers/accountController");
 const utilities = require("../utilities");
 
 // 
-router.get("/login", utilities.handleErrors(accControler.buildLogin));
+router.get("/login", utilities.handleErrors(accountControler.buildLogin));
