@@ -4,13 +4,15 @@
     res.redirect("/")
 } %>
 
-<%# message() %>
 
-<form action="/" id="registerForm">
-    <label>First Name:<input type="text" name="fname" id="fname" required></label>
-    <label>Last Name:<input type="text" name="lname" id="lname" required></label>
-    <label>Email:<input type="email" name="email" id="email" required></label>
-    <label>Password:<input type="password" name="password" id="password" required></label>
+
+<form action="/account/register" method="post" id="registerForm">
+    <label>First Name:<input type="text" name="account_firstname" id="account_firstname" required></label>
+    <label>Last Name:<input type="text" name="account_lastname" id="account_lastname" required></label>
+
+    <label>Email:<input type="email" name="account_email" id="account_email" required></label>
+    <label>Password:<input type="password" name="account_password" id="account_password" required></label>
+    
     <button type="submit" id="loginButton">Register</button>
     <p>I already have an Account<a href="/account/login">Sign-in</a></p>
 </form>

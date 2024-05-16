@@ -4,11 +4,11 @@
     res.redirect("/")
 } %>
 
-<%# message() %>
+<%- messages() %>
 
 <form action="/" id="loginForm">
-    <label>Email:<input type="email" name="email" id="email"></label>
-    <label>Password:<input type="password" name="password" id="password"></label>
+    <label>Email:<input type="email" name="account_email" id="account_email" required></label>
+    <label>Password:<input type="password" name="account_password" id="account_password" required></label>
     <button type="submit" id="loginButton">LOGIN</button>
     <p>No account?<a href="/account/register">Sign-up</a></p>
 </form>
