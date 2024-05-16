@@ -140,3 +140,47 @@ nav ul li{
     width: 300px;
     height: 150px;
 }
+
+/* ******************
+* ---- Login ------ *
+******************** */
+#loginForm{
+    display: flex;
+    flex-direction: column;
+    border:1px solid #0f5085;
+    border-radius: 10px;
+    padding: 35px;
+    width: 80%;
+    gap: 25px;
+    margin: auto;
+    font-size: larger;
+    font-weight: bolder;
+    font-family: var(--paragraph);
+    background-color: #0f5085;
+    color: #fff;
+}
+#loginForm label{
+    display: flex;
+    flex-direction: column;
+}
+#loginForm input{
+    height: 30px;
+    border-radius: 8px;
+    font-size: larger;
+}
+#loginForm button{
+    width: 200px;
+    margin: auto;
+    height: 44px;
+    font-size: larger;
+    font-family: var(--paragraph);
+    border-radius: 8px;
+}
+#loginForm p{
+    text-align: center;
+    color: #fff;
+}
+#loginForm p a{
+    color: #fff;
+    margin-left: 3px;
+}
