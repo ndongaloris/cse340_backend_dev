@@ -58,7 +58,10 @@
   }
   #loginForm{
     width: 35%;
-}
+  }
+  #registerForm{
+    width: 35%;
+  }
 }
 
 @media screen and (min-width:1300px) {
