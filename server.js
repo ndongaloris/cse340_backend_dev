@@ -40,8 +40,8 @@ app.use(session({
 // Express Messages Middleware
 app.use(require('connect-flash')())
 app.use(function(req, res, next){
-  res.locals.messages = require('express-messages')(req, res)
-  next()
+  res.locals.messages = require('express-messages')(req, res);
+  next();
 })
 
 /* ***********************
@@ -58,10 +58,10 @@ app.get("/", utilities.handleErrors(baseController.buildHome));
 app.use("/inv", inventoryRoute);
 app.use("/serverError", inventoryRoute);
 // File Not Found Route - must be last route in list
+app.use("/account", accountRoute);
 app.use(async (req, res, next) => {
   next({status: 404, message: "404 - you really are good at getting lost, aren't you?"})
 });
-app.use("/account", accountRoute);
 
 /* ***********************
 * Express Error Handler
