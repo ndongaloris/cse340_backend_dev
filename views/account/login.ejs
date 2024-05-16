@@ -6,7 +6,7 @@
 
 <%- messages() %>
 
-<form action="/" id="loginForm">
+<form id="loginForm" action="/account/login" method="post">
     <label>Email:<input type="email" name="account_email" id="account_email" required></label>
     <label>Password:<input type="password" name="account_password" id="account_password" required></label>
     <button type="submit" id="loginButton">LOGIN</button>
