@@ -3,7 +3,8 @@ const express = require("express");
 const router = new express.Router();
 const accountController = require("../controllers/accountController");
 const utilities = require("../utilities");
-const regValidate = require('../utilities/account-validation')
+const regValidate = require('../utilities/account-validation');
+const { render } = require("ejs");
 
 // Route to handle requests for building login view
 router.get("/login", utilities.handleErrors(accountController.buildLogin));
@@ -22,9 +23,12 @@ router.post(
 // Process the login attempt
 router.post(
     "/login",
-    (req, res) => {
-        res.status(200).send('login process')
-    }
+    regValidate.loginRules(),
+    regValidate.checkLogData,
+    utilities.handleErrors(accountController.loginAccount),
+    // (req, res) => {
+    //     res.status(200).send('login process')
+    // }
 )
 
 module.exports = router;
