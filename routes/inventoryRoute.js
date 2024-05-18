@@ -16,4 +16,6 @@ router.get("/detail/:singleViewId", invController.BuildSinglePageId);
 // Route to trigger intentional error
 router.get("/serverError", invController.serverError);
 
+router.post("/add-classification", invController.addClassification);
+
 module.exports = router;

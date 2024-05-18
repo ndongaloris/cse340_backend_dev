@@ -11,22 +11,38 @@ const invCont = {}
 
 invCont.buildManagement = async function(req, res, next){
     let nav = await utilities.getNav();
-    const links = await utilities.getManagementLinks();
     res.render("./inventory/management", {
         title: "Vehicle Management",
         nav, 
-        links,
     })
 }
 
 invCont.buildAddClassification = async function(req, res, next){
-    let nav = await utilities.getNav();
-    const form = await utilities.buildNewClassification();
-    res.render("./inventory/add-classification", {
+    let nav = await utilities.getNav()
+    res.render("inventory/add-classification", {
         title : "Add New Classification",
         nav, 
-        form,
+        errors: null,
     })
+}
+
+invCont.addClassification = async function (req, res) {
+    let nav = await utilities.getNav()
+    const {classificationName} = req.body;
+    const newClassification = await invModel.addClassification(classificationName);
+    
+    if (newClassification) {
+        req.flash(
+            "notice",
+            `${classificationName} Added as a classification.`
+        )
+    res.redirect("./")
+    } else {
+    req.flash("notice", "Classification not added, try again")
+    res.status(501).render("inventory/add-classification", {
+        title: "Add New Classification",
+        nav,
+    })}
 }
 invCont.buildAddInventory = async function(req, res, next){
     let nav = await utilities.getNav();

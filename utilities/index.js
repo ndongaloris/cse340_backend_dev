@@ -25,19 +25,6 @@ Util.getNav = async function (req, res, next) {
     return list
 }
 
-Util.getManagementLinks = async function(req, res, nest){
-    return links = `<div id="managementLinks" ><a href="/inv/add-classification">Add New Classification</a>
-                    <a href="/inv/add-inventory">Add New Vehicle</a></div>`;
-}
-
-Util.buildNewClassification = async function(res, req, next){
-    return form = `<form id="newClassificationForm">
-                    <h3>Classification Name</h3>
-                    <label>NAME MUST BE ALPHABETIC CHARACTERS ONLY<input type="text" name="classification"></label>
-                    <button type="submit">Add Classification</button>
-                </form>`
-}
-
 
 Util.buildClassificationList = async function (classification_id = null) {
     let data = await invModel.getClassifications()
@@ -55,15 +42,15 @@ Util.buildClassificationList = async function (classification_id = null) {
         classificationList += ">" + row.classification_name + "</option>"
         })
         classificationList += "</select>"
-        classificationList += `<label>Make<input type="text"></label>
-                                <label>Model<input type="text"></label>
-                                <label>Description<textarea type="text"></textarea></label>
-                                <label>impage Path<input type="text"></label>
-                                <label>thumbnail Path<input type="text"></label>
-                                <label>Price<input type="decimal" placeHolder="decimal or integer"></label>
-                                <label>Year<input type="number" placeHolder="4-digit year"></label>
-                                <label>Miles<input type="number" placeHolder="digits only"></label>
-                                <label>Color<input type="text"></label>
+        classificationList += `<label>Make<input type="text" required></label>
+                                <label>Model<input type="text" required></label>
+                                <label>Description<textarea type="text" required></textarea></label>
+                                <label>impage Path<input type="text" required></label>
+                                <label>thumbnail Path<input type="text" required></label>
+                                <label>Price<input type="decimal" placeHolder="decimal or integer" required></label>
+                                <label>Year<input type="number" placeHolder="4-digit year" required></label>
+                                <label>Miles<input type="number" placeHolder="digits only" required></label>
+                                <label>Color<input type="text" required></label>
                                 <button type="submit">Add Vehicle</button>
                                 </form>`
         return classificationList
