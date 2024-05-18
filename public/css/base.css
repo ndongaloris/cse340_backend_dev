@@ -240,3 +240,40 @@ nav ul li{
     gap: 20px;
     margin: 0 0 0 30px;
 }
+
+
+#newClassificationForm, #newVehicleForm{
+    display: flex;
+    flex-direction: column;
+    border:1px solid #0f5085;
+    border-radius: 10px;
+    padding: 35px;
+    width: 80%;
+    gap: 25px;
+    margin: auto;
+    font-size: medium;
+    font-weight: bolder;
+    font-family: var(--paragraph);
+    background-color: #0f5085;
+    color: #fff;
+}
+#newClassificationForm label, #newVehicleForm label, select{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: auto;
+}
+#newClassificationForm input{
+    height: 30px;
+    border-radius: 8px;
+    font-size: larger;
+}
+
+#newClassificationForm button,  #newVehicleForm button{
+    width: 250px;
+    margin: auto;
+    height: 44px;
+    font-size: larger;
+    font-family: var(--paragraph);
+    border-radius: 8px;
+}

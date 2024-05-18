@@ -62,6 +62,9 @@
   #registerForm{
     width: 35%;
   }
+  #newClassificationForm,  #newVehicleForm{
+    width: 35%;
+  }
 }
 
 @media screen and (min-width:1300px) {

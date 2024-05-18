@@ -31,17 +31,18 @@ Util.getManagementLinks = async function(req, res, nest){
 }
 
 Util.buildNewClassification = async function(res, req, next){
-    return form = `<h3>Classification Name<h3>
-                <form>
-                    <label>NAME BUST BE ALPHABETIC CHARACTERS ONLY<input type="text" name="classification"></input><label>
+    return form = `<form id="newClassificationForm">
+                    <h3>Classification Name</h3>
+                    <label>NAME MUST BE ALPHABETIC CHARACTERS ONLY<input type="text" name="classification"></label>
+                    <button type="submit">Add Classification</button>
                 </form>`
 }
 
 
 Util.buildClassificationList = async function (classification_id = null) {
     let data = await invModel.getClassifications()
-    let classificationList =
-        '<select name="classification_id" id="classificationList" required>'
+    let classificationList = `<form id="newVehicleForm">
+        <select name="classification_id" id="classificationList" required>`
         classificationList += "<option value=''>Choose a Classification</option>"
         data.rows.forEach((row) => {
         classificationList += '<option value="' + row.classification_id + '"'
@@ -54,6 +55,17 @@ Util.buildClassificationList = async function (classification_id = null) {
         classificationList += ">" + row.classification_name + "</option>"
         })
         classificationList += "</select>"
+        classificationList += `<label>Make<input type="text"></label>
+                                <label>Model<input type="text"></label>
+                                <label>Description<textarea type="text"></textarea></label>
+                                <label>impage Path<input type="text"></label>
+                                <label>thumbnail Path<input type="text"></label>
+                                <label>Price<input type="decimal" placeHolder="decimal or integer"></label>
+                                <label>Year<input type="number" placeHolder="4-digit year"></label>
+                                <label>Miles<input type="number" placeHolder="digits only"></label>
+                                <label>Color<input type="text"></label>
+                                <button type="submit">Add Vehicle</button>
+                                </form>`
         return classificationList
     }
 /* **************************************
