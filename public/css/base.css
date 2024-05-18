@@ -257,7 +257,13 @@ nav ul li{
     background-color: #0f5085;
     color: #fff;
 }
-#newClassificationForm label, #newVehicleForm label, select{
+#newClassificationForm label{
+    display: flex;
+    flex-direction: column;
+    font-size: small;
+    gap: 10px;
+}
+#newVehicleForm label, select{
     display: flex;
     flex-direction: column;
     width: 90%;
