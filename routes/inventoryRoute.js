@@ -3,6 +3,8 @@ const express = require("express")
 const router = new express.Router() 
 const invController = require("../controllers/invController")
 
+router.get("/", invController.buildManagement)
+
 // Route to handle requests for building inventory by classification
 router.get("/type/:classificationId", invController.buildByClassificationId);
 

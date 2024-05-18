@@ -227,3 +227,16 @@ nav ul li{
     color: #fff;
     margin-left: 3px;
 }
+
+
+
+/* ********************
+* Management View
+*********************** */
+
+#managementLinks{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 0 0 0 30px;
+}
