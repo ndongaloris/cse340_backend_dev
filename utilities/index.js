@@ -26,9 +26,36 @@ Util.getNav = async function (req, res, next) {
 }
 
 Util.getManagementLinks = async function(req, res, nest){
-    return links = `<div id="managementLinks" ><a href="/">Add New Classification</a>
-                    <a href="/">Add New Vehicle</a></div>`;
+    return links = `<div id="managementLinks" ><a href="/inv/add-classification">Add New Classification</a>
+                    <a href="/inv/add-inventory">Add New Vehicle</a></div>`;
 }
+
+Util.buildNewClassification = async function(res, req, next){
+    return form = `<h3>Classification Name<h3>
+                <form>
+                    <label>NAME BUST BE ALPHABETIC CHARACTERS ONLY<input type="text" name="classification"></input><label>
+                </form>`
+}
+
+
+Util.buildClassificationList = async function (classification_id = null) {
+    let data = await invModel.getClassifications()
+    let classificationList =
+        '<select name="classification_id" id="classificationList" required>'
+        classificationList += "<option value=''>Choose a Classification</option>"
+        data.rows.forEach((row) => {
+        classificationList += '<option value="' + row.classification_id + '"'
+        if (
+            classification_id != null &&
+            row.classification_id == classification_id
+        ) {
+            classificationList += " selected "
+        }
+        classificationList += ">" + row.classification_name + "</option>"
+        })
+        classificationList += "</select>"
+        return classificationList
+    }
 /* **************************************
 * Build the classification view HTML
 * ************************************ */

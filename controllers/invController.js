@@ -19,6 +19,24 @@ invCont.buildManagement = async function(req, res, next){
     })
 }
 
+invCont.buildAddClassification = async function(req, res, next){
+    let nav = await utilities.getNav();
+    const form = await utilities.buildNewClassification();
+    res.render("./inventory/add-classification", {
+        title : "Add New Classification",
+        nav, 
+        form,
+    })
+}
+invCont.buildAddInventory = async function(req, res, next){
+    let nav = await utilities.getNav();
+    const selectList = await utilities.buildClassificationList();
+    res.render("./inventory/add-inventory", {
+        title : "Add New Vehicle",
+        nav, 
+        selectList,
+    })
+}
 
 
 /* ***************************
