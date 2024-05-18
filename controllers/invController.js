@@ -3,28 +3,30 @@ const utilities = require("../utilities/")
 
 const invCont = {}
 
-
-
 /* ***************************
  *  Build management view
  * ************************** */
 
 invCont.buildManagement = async function(req, res, next){
     let nav = await utilities.getNav();
+    const links = await utilities.getManagementLinks();
     res.render("./inventory/management", {
         title: "Vehicle Management",
         nav, 
+        links,
     })
 }
 
 invCont.buildAddClassification = async function(req, res, next){
-    let nav = await utilities.getNav()
-    res.render("inventory/add-classification", {
+    let nav = await utilities.getNav();
+    const form = await utilities.buildNewClassification();
+    res.render("./inventory/add-classification", {
         title : "Add New Classification",
         nav, 
-        errors: null,
+        form,
     })
 }
+
 
 invCont.addClassification = async function (req, res) {
     let nav = await utilities.getNav()
@@ -34,9 +36,10 @@ invCont.addClassification = async function (req, res) {
     if (newClassification) {
         req.flash(
             "notice",
-            `${classificationName} Added as a classification.`
+            `${classificationName} has been added as a classification.`
         )
-    res.redirect("./")
+        res.redirect("./")
+
     } else {
     req.flash("notice", "Classification not added, try again")
     res.status(501).render("inventory/add-classification", {
@@ -44,6 +47,17 @@ invCont.addClassification = async function (req, res) {
         nav,
     })}
 }
+
+invCont.buildAddInventory = async function(req, res, next){
+    let nav = await utilities.getNav();
+    const selectList = await utilities.buildClassificationList();
+    res.render("./inventory/add-inventory", {
+        title : "Add New Vehicle",
+        nav, 
+        selectList,
+    })
+}
+
 invCont.buildAddInventory = async function(req, res, next){
     let nav = await utilities.getNav();
     const selectList = await utilities.buildClassificationList();

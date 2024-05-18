@@ -25,6 +25,19 @@ Util.getNav = async function (req, res, next) {
     return list
 }
 
+Util.getManagementLinks = async function(req, res, nest){
+    return links = `<div id="managementLinks" ><a href="/inv/add-classification">Add New Classification</a>
+                    <a href="/inv/add-inventory">Add New Vehicle</a></div>`;
+}
+
+Util.buildNewClassification = async function(res, req, next){
+    return form = `<form action="/inv/add-classification" id="newClassificationForm" method="post">
+                    <h3>Classification Name</h3>
+                    <label>NAME MUST BE ALPHABETIC CHARACTERS ONLY<input type="text" name="classificationName" required></label>
+                    <button type="submit">Add Classification</button>
+                </form>`
+}
+
 
 Util.buildClassificationList = async function (classification_id = null) {
     let data = await invModel.getClassifications()
