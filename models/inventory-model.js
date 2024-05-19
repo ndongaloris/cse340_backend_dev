@@ -24,7 +24,7 @@ async function getInventoryByClassificationId(classification_id) {
 async function getClassifications(){
   return await pool.query("SELECT * FROM public.classification ORDER BY classification_name")
 }
-async function checkExistingclassification(classification_name){
+async function checkExistingClassification(classification_name){
   try {
     const sql = "SELECT * FROM account WHERE account_password = $1"
       const classificationTable = await pool.query(sql, [classification_name])
@@ -90,4 +90,4 @@ module.exports = {
   getInventory, 
   addClassification, 
   addVehicle, 
-  checkExistingclassification}
+  checkExistingClassification}
