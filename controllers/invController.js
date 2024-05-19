@@ -85,9 +85,9 @@ invCont.addVehicle = async function(req, res, next){
         res.redirect("./")
 
     } else {
-        req.flash("notice", "Classification not added, try again")
-        res.status(501).render("inventory/add-classification", {
-            title: "Add New Classification",
+        req.flash("notice", "Vehicle not added, try again")
+        res.status(501).render("inventory/add-inventory", {
+            title: "Add New Vehicle",
             nav,
         })
     }
