@@ -24,7 +24,15 @@ async function getInventoryByClassificationId(classification_id) {
 async function getClassifications(){
   return await pool.query("SELECT * FROM public.classification ORDER BY classification_name")
 }
-
+async function checkExistingclassification(classification_name){
+  try {
+    const sql = "SELECT * FROM account WHERE account_password = $1"
+      const classificationTable = await pool.query(sql, [classification_name])
+      return classificationTable.rowCount
+      } catch (error) {
+      return error.message
+      }
+  }
 /**
  * Retrieves inventory data for a given vehicle ID from the database.
  * WARNING: This function is susceptible to SQL injection attacks!
@@ -81,4 +89,5 @@ module.exports = {
   getInventoryByClassificationId, 
   getInventory, 
   addClassification, 
-  addVehicle}
+  addVehicle, 
+  checkExistingclassification}

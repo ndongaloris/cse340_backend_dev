@@ -24,6 +24,8 @@ invCont.buildAddClassification = async function(req, res, next){
         title : "Add New Classification",
         nav, 
         form,
+        errors:null,
+
     })
 }
 
@@ -55,6 +57,7 @@ invCont.buildAddInventory = async function(req, res, next){
         title : "Add New Vehicle",
         nav, 
         selectList,
+        errors:null,
     })
 }
 

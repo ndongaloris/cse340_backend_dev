@@ -2,6 +2,8 @@
 const express = require("express")
 const router = new express.Router() 
 const invController = require("../controllers/invController")
+const utilities = require("../utilities");
+const classValidate = require('../utilities/management-validation');
 
 router.get("/", invController.buildManagement)
 
@@ -17,7 +19,11 @@ router.get("/detail/:singleViewId", invController.BuildSinglePageId);
 // Route to trigger intentional error
 router.get("/serverError", invController.serverError);
 
-router.post("/add-classification", invController.addClassification);
+router.post(
+    "/add-classification",
+    classValidate.classificationRules(), 
+    classValidate.checkClassificationData, 
+    utilities.handleErrors(invController.addClassification));
 
 router.post("/add-inventory", invController.addVehicle);
 
