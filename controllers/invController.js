@@ -58,16 +58,37 @@ invCont.buildAddInventory = async function(req, res, next){
     })
 }
 
-invCont.buildAddInventory = async function(req, res, next){
+invCont.addVehicle = async function(req, res, next){
     let nav = await utilities.getNav();
-    const selectList = await utilities.buildClassificationList();
-    res.render("./inventory/add-inventory", {
-        title : "Add New Vehicle",
-        nav, 
-        selectList,
-    })
-}
+    const {classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color} = req.body;
+    const newVehicle = await invModel.addVehicle(
+        classification_id,
+        inv_make, 
+        inv_model, 
+        inv_description, 
+        inv_image, 
+        inv_thumbnail, 
+        inv_price, 
+        inv_year, 
+        inv_miles, 
+        inv_color,
+    );
+    
+    if (newVehicle) {
+        req.flash(
+            "notice",
+            `${inv_make} ${inv_model} has been added.`
+        )
+        res.redirect("./")
 
+    } else {
+        req.flash("notice", "Classification not added, try again")
+        res.status(501).render("inventory/add-classification", {
+            title: "Add New Classification",
+            nav,
+        })
+    }
+}
 
 /* ***************************
  *  Build inventory by classification view

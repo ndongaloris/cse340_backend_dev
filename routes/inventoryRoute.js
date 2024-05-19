@@ -4,6 +4,7 @@ const router = new express.Router()
 const invController = require("../controllers/invController")
 
 router.get("/", invController.buildManagement)
+
 router.get("/add-classification", invController.buildAddClassification)
 router.get("/add-inventory", invController.buildAddInventory)
 
@@ -17,5 +18,7 @@ router.get("/detail/:singleViewId", invController.BuildSinglePageId);
 router.get("/serverError", invController.serverError);
 
 router.post("/add-classification", invController.addClassification);
+
+router.post("/add-inventory", invController.addVehicle);
 
 module.exports = router;

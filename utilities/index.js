@@ -26,14 +26,16 @@ Util.getNav = async function (req, res, next) {
 }
 
 Util.getManagementLinks = async function(req, res, nest){
-    return links = `<div id="managementLinks" ><a href="/inv/add-classification">Add New Classification</a>
-                    <a href="/inv/add-inventory">Add New Vehicle</a></div>`;
+    return links = `<div id="managementLinks" >
+                        <a href="/inv/add-classification">Add New Classification</a>
+                        <a href="/inv/add-inventory">Add New Vehicle</a>
+                    </div>`;
 }
 
 Util.buildNewClassification = async function(res, req, next){
     return form = `<form action="/inv/add-classification" id="newClassificationForm" method="post">
                     <h3>Classification Name</h3>
-                    <label>NAME MUST BE ALPHABETIC CHARACTERS ONLY<input type="text" name="classificationName" required></label>
+                    <label>NAME MUST BE ALPHABETIC CHARACTERS ONLY<input type="text" name="classificationName" pattern="^[a-zA-Z]*$" required></label>
                     <button type="submit">Add Classification</button>
                 </form>`
 }
@@ -41,7 +43,7 @@ Util.buildNewClassification = async function(res, req, next){
 
 Util.buildClassificationList = async function (classification_id = null) {
     let data = await invModel.getClassifications()
-    let classificationList = `<form id="newVehicleForm">
+    let classificationList = `<form action="/inv/add-inventory"  method="post" id="newVehicleForm">
         <select name="classification_id" id="classificationList" required>`
         classificationList += "<option value=''>Choose a Classification</option>"
         data.rows.forEach((row) => {
@@ -55,15 +57,15 @@ Util.buildClassificationList = async function (classification_id = null) {
         classificationList += ">" + row.classification_name + "</option>"
         })
         classificationList += "</select>"
-        classificationList += `<label>Make<input type="text" required></label>
-                                <label>Model<input type="text" required></label>
-                                <label>Description<textarea type="text" required></textarea></label>
-                                <label>impage Path<input type="text" required></label>
-                                <label>thumbnail Path<input type="text" required></label>
-                                <label>Price<input type="decimal" placeHolder="decimal or integer" required></label>
-                                <label>Year<input type="number" placeHolder="4-digit year" required></label>
-                                <label>Miles<input type="number" placeHolder="digits only" required></label>
-                                <label>Color<input type="text" required></label>
+        classificationList += `<label>Make<input type="text" name="inv_make" required></label>
+                                <label>Model<input type="text" name="inv_model" required></label>
+                                <label>Description<textarea type="text" name="inv_description" required></textarea></label>
+                                <label>Image Path<input type="text" name="inv_image" value="/images/vehicles/no-image.png" required></label>
+                                <label>Thumbnail Path<input type="text" name="inv_thumbnail" value="/images/vehicles/no-image.png" required></label>
+                                <label>Price<input type="decimal" name="inv_price" placeHolder="decimal or integer" required></label>
+                                <label>Year<input type="number" name="inv_year" placeHolder="4-digit year" required></label>
+                                <label>Miles<input type="number" name="inv_miles" placeHolder="digits only" required></label>
+                                <label>Color<input type="text" name="inv_color" required></label>
                                 <button type="submit">Add Vehicle</button>
                                 </form>`
         return classificationList
