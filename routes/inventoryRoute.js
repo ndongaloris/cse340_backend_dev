@@ -19,6 +19,8 @@ router.get("/detail/:singleViewId", invController.BuildSinglePageId);
 // Route to trigger intentional error
 router.get("/serverError", invController.serverError);
 
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+
 router.post(
     "/add-classification",
     classValidate.classificationRules(), 
