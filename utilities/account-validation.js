@@ -6,7 +6,7 @@ const accountModel = require("../models/account-model")
 /*  **********************************
   *  Registration Data Validation Rules
   * ********************************* */
-validate.registationRules = () => {
+validate.registrationRules = () => {
     return [
         // firstname is required and must be string
         body("account_firstname")
@@ -52,9 +52,9 @@ validate.registationRules = () => {
         ]
     }
 
-/* ******************************
+/* ********************************************************
  * Check data and return errors or continue to registration
- * ***************************** */
+ * ********************************************************/
 validate.checkRegData = async (req, res, next) => {
     const { account_firstname, account_lastname, account_email } = req.body
     let errors = []
@@ -93,30 +93,30 @@ validate.loginRules = () => {
         }),
     
         // password is required and must be strong password
-        body("account_password")
-            .trim()
-            .notEmpty()
-            .isStrongPassword({
-            minLength: 12,
-            minLowercase: 1,
-            minUppercase: 1,
-            minNumbers: 1,
-            minSymbols: 1,
-            })            
-            .withMessage("You have entered an wrong Email or Password.")
-            .custom(async(account_password) => {
-                const passwordExist = await accountModel.checkExistingPassword(account_password)
-                if (!passwordExist){
-                    throw new Error("Email or Password Incorrect.")
-                }
-            }),
+        // body("account_password")
+        //     .trim()
+        //     .notEmpty()
+        //     .isStrongPassword({
+        //     minLength: 12,
+        //     minLowercase: 1,
+        //     minUppercase: 1,
+        //     minNumbers: 1,
+        //     minSymbols: 1,
+        //     })            
+        //     .withMessage("You have entered an wrong Email or Password.")
+        //     .custom(async(account_password) => {
+        //         const passwordExist = await accountModel.checkExistingPassword(account_password)
+        //         if (!passwordExist){
+        //             throw new Error("Email or Password Incorrect.")
+        //         }
+        //     }),
         ]
     }
 
 /* *************************************************
  * Check data and return errors or continue to login
  * ************************************************* */
-validate.checkLogData = async (req, res, next) => {
+validate.checkLoginData = async (req, res, next) => {
     const { account_email } = req.body
     let errors = []
     errors = validationResult(req)

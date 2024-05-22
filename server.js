@@ -16,13 +16,19 @@ const baseController = require("./controllers/baseController");
 const session = require("express-session");
 const pool = require('./database/');
 const accountRoute = require("./routes/accountRoute");
-const bodyParser = require("body-parser")
+const bodyParser = require("body-parser");
+const cookieParser =  require("cookie-parser");
+
+
 /* ***********************
  * View Engine and Templates
  *************************/
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.set("layout", "./layouts/layout");
+
+
+
 
 /* ***********************
  * Middleware
@@ -46,6 +52,10 @@ app.use(function(req, res, next){
 })
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+// login Process
+app.use(cookieParser());
+app.use(utilities.checkJWTToken)
+
 
 /* ***********************
  * Routes
@@ -66,6 +76,9 @@ app.use(async (req, res, next) => {
   next({status: 404, message: "404 - you really are good at getting lost, aren't you?"})
 });
 
+
+
+
 /* ***********************
 * Express Error Handler
 * Place after all other middleware
@@ -81,12 +94,18 @@ app.use(async (err, req, res, next) => {
   })
 })
 
+
+
+
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file
  *************************/
 const port = process.env.PORT;
 const host = process.env.HOST;
+
+
+
 
 /* ***********************
  * Log statement to confirm server operation
