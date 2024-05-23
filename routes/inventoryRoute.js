@@ -23,7 +23,7 @@ router.get("/detail/:singleViewId", invController.BuildSinglePageId);
 router.get("/serverError", invController.serverError);
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON));
 // route to update an item in the inventory
-router.get("/edit/:inventoryId", utilities.handleErrors(invController.updateInventory));
+router.get("/edit/:inventoryId", utilities.handleErrors(invController.editInventory));
 
 /*****************************
  * Post Section
@@ -40,5 +40,7 @@ router.post(
     classValidate.inventoryRules(), 
     classValidate.checkInventoryData,
     utilities.handleErrors(invController.addVehicle));
+
+router.post("/update/", utilities.handleErrors(invController.updateInventory));
 
 module.exports = router;
