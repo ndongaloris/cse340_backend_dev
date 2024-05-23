@@ -242,7 +242,7 @@ nav ul li{
 }
 
 
-#newClassificationForm, #newVehicleForm{
+#newClassificationForm, #vehicleForm{
     display: flex;
     flex-direction: column;
     border:1px solid #0f5085;
@@ -263,7 +263,7 @@ nav ul li{
     font-size: small;
     gap: 10px;
 }
-#newVehicleForm label, select{
+#vehicleForm label, select{
     display: flex;
     flex-direction: column;
     width: 90%;
@@ -275,7 +275,7 @@ nav ul li{
     font-size: larger;
 }
 
-#newClassificationForm button,  #newVehicleForm button{
+#newClassificationForm button,  #vehicleForm button{
     width: 250px;
     margin: auto;
     height: 44px;

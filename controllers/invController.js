@@ -161,28 +161,28 @@ invCont.getInventoryJSON = async (req, res, next) => {
     }
 }
 
-invCont.updateInventory = async (req, res, next){
+invCont.updateInventory = async (req, res, next) => {
     const inventoryId = parseInt(req.params.inventoryId);
     let nav = await utilities.getNav();
-    const inventoryData = invModel.getInventoryById(inventoryId);
+    const inventoryData = await invModel.getInventory(inventoryId);
     const inventoryName = `${inventoryData[0].inv_make} ${inventoryData[0].inv_model}` 
-    const selectList = await utilities.buildClassificationList(inventoryData.classification_id);
+    const selectList = await utilities.buildClassificationList(inventoryId);
     res.render("./inventory/edit-inventory", {
         title : inventoryName + "Edit New Vehicle",
         nav, 
         selectList,
         errors:null,
-        inv_id: inventoryData.inv_id,
-        inv_make: inventoryData.inv_make,
-        inv_model: inventoryData.inv_model,
-        inv_year: inventoryData.inv_year,
-        inv_description: inventoryData.inv_description,
-        inv_image: inventoryData.inv_image,
-        inv_thumbnail: inventoryData.inv_thumbnail,
-        inv_price: inventoryData.inv_price,
-        inv_miles: inventoryData.inv_miles,
-        inv_color: inventoryData.inv_color,
-        classification_id: inventoryData.classification_id
+        inv_id: inventoryData[0].inv_id,
+        inv_make: inventoryData[0].inv_make,
+        inv_model: inventoryData[0].inv_model,
+        inv_year: inventoryData[0].inv_year,
+        inv_description: inventoryData[0].inv_description,
+        inv_image: inventoryData[0].inv_image,
+        inv_thumbnail: inventoryData[0].inv_thumbnail,
+        inv_price: inventoryData[0].inv_price,
+        inv_miles: inventoryData[0].inv_miles,
+        inv_color: inventoryData[0].inv_color,
+        classification_id: inventoryData[0].classification_id
     })
 }
 

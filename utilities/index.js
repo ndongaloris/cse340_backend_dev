@@ -46,8 +46,7 @@ Util.buildNewClassification = async function(res, req, next){
 
 Util.buildClassificationList = async function (classification_id = null) {
     let data = await invModel.getClassifications()
-    let classificationList = `<form action="/inv/add-inventory"  method="post" id="newVehicleForm">
-        <select name="classification_id" id="classificationList" required>`
+    let classificationList = `<select name="classification_id" id="classificationList" required>`
         classificationList += "<option value=''>Choose a Classification</option>"
         data.rows.forEach((row) => {
         classificationList += '<option value="' + row.classification_id + '"'
@@ -60,18 +59,7 @@ Util.buildClassificationList = async function (classification_id = null) {
         classificationList += ">" + row.classification_name + "</option>"
         })
         classificationList += "</select>"
-        classificationList += `<label>Make<input type="text" name="inv_make" required></label>
-                                <label>Model<input type="text" name="inv_model" required></label>
-                                <label>Description<textarea type="text" name="inv_description" required></textarea></label>
-                                <label>Image Path<input type="text" name="inv_image" value="/images/vehicles/no-image.png" required></label>
-                                <label>Thumbnail Path<input type="text" name="inv_thumbnail" value="/images/vehicles/no-image.png" required></label>
-                                <label>Price<input type="decimal" pattern="^[0-9]*\.?[0-9]+$" name="inv_price" placeholder="decimal or integer" required></label>
-                                <label>Year<input type="number" pattern="^\d{4}$" name="inv_year" placeholder="4-digit year" required></label>
-                                <label>Miles<input type="number" pattern="^\d+$" name="inv_miles" placeholder="digits only" required></label>
-                                <label>Color<input type="text" name="inv_color" required></label>
-                                <button type="submit">Add Vehicle</button>
-                                </form>`
-        return classificationList
+        return classificationList;
     }
 /* **************************************
 * Build the classification view HTML
