@@ -166,11 +166,11 @@ invCont.updateInventory = async (req, res, next) => {
     let nav = await utilities.getNav();
     const inventoryData = await invModel.getInventory(inventoryId);
     const inventoryName = `${inventoryData[0].inv_make} ${inventoryData[0].inv_model}` 
-    const selectList = await utilities.buildClassificationList(inventoryId);
+    const selectList = await utilities.buildClassificationList(inventoryData[0].classification_id);
     res.render("./inventory/edit-inventory", {
         title : inventoryName + "Edit New Vehicle",
         nav, 
-        selectList,
+        selectList: selectList,
         errors:null,
         inv_id: inventoryData[0].inv_id,
         inv_make: inventoryData[0].inv_make,
@@ -182,7 +182,7 @@ invCont.updateInventory = async (req, res, next) => {
         inv_price: inventoryData[0].inv_price,
         inv_miles: inventoryData[0].inv_miles,
         inv_color: inventoryData[0].inv_color,
-        classification_id: inventoryData[0].classification_id
+        classification_id: inventoryData[0].classification_id,
     })
 }
 
