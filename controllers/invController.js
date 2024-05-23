@@ -1,5 +1,6 @@
 const invModel = require("../models/inventory-model")
-const utilities = require("../utilities/")
+const utilities = require("../utilities/");
+const { inventoryRules } = require("../utilities/management-validation");
 
 const invCont = {}
 
@@ -20,6 +21,9 @@ invCont.buildManagement = async function(req, res, next){
     })
 }
 
+/* ***************************
+ *  Build add classification view
+ * ************************** */
 invCont.buildAddClassification = async function(req, res, next){
     let nav = await utilities.getNav();
     const form = await utilities.buildNewClassification();
@@ -31,7 +35,6 @@ invCont.buildAddClassification = async function(req, res, next){
 
     })
 }
-
 
 invCont.addClassification = async function (req, res) {
     let nav = await utilities.getNav()
@@ -53,6 +56,9 @@ invCont.addClassification = async function (req, res) {
     })}
 }
 
+/* ***************************
+ *  Build add inventory view
+ * ************************** */
 invCont.buildAddInventory = async function(req, res, next){
     let nav = await utilities.getNav();
     const selectList = await utilities.buildClassificationList();
@@ -147,12 +153,37 @@ invCont.serverError = (req, res, next) => {
  * ************************** */
 invCont.getInventoryJSON = async (req, res, next) => {
     const classification_id = parseInt(req.params.classification_id)
-    const invData = await invModel.getInventoryByClassificationId(classification_id)
+    const invData = await invModel.getInventory(classification_id)
     if (invData[0].inv_id) {
         return res.json(invData)
     } else {
         next(new Error("No data returned"))
     }
+}
+
+invCont.updateInventory = async (req, res, next){
+    const inventoryId = parseInt(req.params.inventoryId);
+    let nav = await utilities.getNav();
+    const inventoryData = invModel.getInventoryById(inventoryId);
+    const inventoryName = `${inventoryData[0].inv_make} ${inventoryData[0].inv_model}` 
+    const selectList = await utilities.buildClassificationList(inventoryData.classification_id);
+    res.render("./inventory/edit-inventory", {
+        title : inventoryName + "Edit New Vehicle",
+        nav, 
+        selectList,
+        errors:null,
+        inv_id: inventoryData.inv_id,
+        inv_make: inventoryData.inv_make,
+        inv_model: inventoryData.inv_model,
+        inv_year: inventoryData.inv_year,
+        inv_description: inventoryData.inv_description,
+        inv_image: inventoryData.inv_image,
+        inv_thumbnail: inventoryData.inv_thumbnail,
+        inv_price: inventoryData.inv_price,
+        inv_miles: inventoryData.inv_miles,
+        inv_color: inventoryData.inv_color,
+        classification_id: inventoryData.classification_id
+    })
 }
 
 
