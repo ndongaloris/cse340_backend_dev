@@ -1,15 +1,15 @@
-<% if (title){ %>
-    <h1><%= title %></h1>
+<% if (title){ %> <!-- Checking if the 'title' variable is defined -->
+    <h1><%= title %></h1> <!-- Displaying the title if it exists -->
 <% }else{
-    res.redirect("/")
+    res.redirect("/") <!-- Redirecting to the root URL if the 'title' variable is not defined -->
 } %>
 
-<%- messages() %>
+<%- messages() %> <!-- Displaying flash messages -->
 
-<% if (errors) { %>
-    <ul class="notice">
-<% errors.array().forEach(error => { %>
-<li><%= error.msg %></li>
-<%  }) %>
-</ul>
-<% } %>
+<% if (errors) { %> <!-- Checking if the 'errors' variable is defined -->
+    <ul class="notice"> <!-- Starting an unordered list for displaying errors -->
+<% errors.array().forEach(error => { %> <!-- Looping through each error in the 'errors' array -->
+<li><%= error.msg %></li> <!-- Displaying each error message -->
+<%  }) %> <!-- Ending the loop -->
+</ul> <!-- Closing the unordered list -->
+<% } %> <!-- Ending the conditional block for displaying errors -->

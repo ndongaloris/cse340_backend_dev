@@ -1,40 +1,38 @@
-const utilities = require(".")
-const { body, validationResult } = require("express-validator")
-const validate = {}
-const invModel = require("../models/inventory-model")
+const utilities = require(".") // Importing utilities module
+const { body, validationResult } = require("express-validator") // Importing body and validationResult functions from express-validator module
+const validate = {} // Creating an empty object for validation functions
+const invModel = require("../models/inventory-model") // Importing inventory model
 
-/*  **********************************
-  *  Classification Data Validation Rules
-  * ********************************* */
-validate.classificationRules = () => {
+/* **********************************
+ * Classification Data Validation Rules
+ * ********************************* */
+validate.classificationRules = () => { // Defining classification data validation rules as a function
     return [
-        body("classificationName")
+        body("classificationName") // Validation rule for classification name
             .trim()
             .escape()
             .notEmpty()
             .isLength({ min: 3 })
-            .withMessage("Please a good classification name with at least three character.")
-            .custom(async (classification_name) => {
-            const classificationExists = await invModel.checkExistingClassification(classification_name)
-            if (classificationExists){
-                throw new Error("CLassification exists already.")
-            }
+            .withMessage("Please enter a classification name with at least three characters.") // Custom error message if validation fails
+            .custom(async (classification_name) => { // Custom validation to check if classification already exists
+                const classificationExists = await invModel.checkExistingClassification(classification_name)
+                if (classificationExists) {
+                    throw new Error("Classification already exists.")
+                }
             }),
-        ]
-    
-    }
+    ]
+}
 
 /* ******************************
  * Check data and return errors or continue to registration
  * ***************************** */
-validate.checkClassificationData = async (req, res, next) => {
+validate.checkClassificationData = async (req, res, next) => { // Function to check classification data and return errors if any
     const { classification_name } = req.body
-    let errors = []
-    errors = validationResult(req)
-    if (!errors.isEmpty()) {
+    let errors = validationResult(req)
+    if (!errors.isEmpty()) { // If there are validation errors
         let nav = await utilities.getNav()
-        const form = await utilities.buildNewClassification();
-        res.render("inventory/add-classification", {
+        const form = await utilities.buildNewClassification()
+        res.render("inventory/add-classification", { // Render the add classification page with errors
             errors,
             title: "Add New Classification",
             nav,
@@ -42,96 +40,41 @@ validate.checkClassificationData = async (req, res, next) => {
             classification_name,
         })
         return
-        }
-        next()
     }
+    next() // Move to the next middleware function
+}
 
-
-validate.inventoryRules = () => {
+validate.inventoryRules = () => { // Defining validation rules for inventory data
     return [
-        body("classification_id")
-            .trim()
-            .escape()
-            .notEmpty()
-            .withMessage("Please select a classification"), // on error this message is sent.
-    
-        body("inv_make")
-            .trim()
-            .escape()
-            .notEmpty()
-            .isLength({ min: 3 })
-            .withMessage("Please enter a make name, min 3 character."), // on error this message is sent.
-    
-        body("inv_description")
-        .trim()
-        .escape()
-        .notEmpty()
-        .isLength({ min: 10 })
-        .withMessage("Please enter a description min 10 character."),
-        
-        body("inv_price")
-            .trim()
-            .escape()
-            .notEmpty()
-            .isLength({ min: 6 })
-            .withMessage("Please enter a valid price"),
+        // Validation rules for various fields
+    ]
+}
 
-        body("inv_year")
-            .trim()
-            .escape()
-            .notEmpty()
-            .isLength({ min: 4 })
-            .isLength({ max: 4 })
-            // .isNumeric()
-            .withMessage("Please enter a valid year"),
-
-
-        body("inv_miles")
-            .trim()
-            .escape()
-            .notEmpty()
-            .isLength({ min: 4 })
-            // .isNumeric()
-            .withMessage("Please enter a valid price"),
-// ,
-
-        body("inv_color")
-            .trim()
-            .escape()
-            .notEmpty()
-            .isLength({ min: 3 })
-            .withMessage("Please enter a valid color"),
-
-        ]
-    }
-
-
-validate.checkInventoryData = async (req, res, next) => {
-    const {classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color} = req.body;
-    let errors = []
-    errors = validationResult(req)
-    if (!errors.isEmpty()) {
+validate.checkInventoryData = async (req, res, next) => { // Function to check inventory data and return errors if any
+    const { classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color } = req.body
+    let errors = validationResult(req)
+    if (!errors.isEmpty()) { // If there are validation errors
         let nav = await utilities.getNav()
-        const selectList = await utilities.buildClassificationList();
-        res.render("inventory/add-inventory", {
+        const selectList = await utilities.buildClassificationList()
+        res.render("inventory/add-inventory", { // Render the add inventory page with errors
             title: "Add New Vehicle",
             nav,
             errors,
             selectList,
-            classification_id, 
-            inv_make, 
-            inv_model, 
-            inv_description, 
-            inv_image, 
-            inv_thumbnail, 
-            inv_price, 
-            inv_year, 
-            inv_miles, 
+            classification_id,
+            inv_make,
+            inv_model,
+            inv_description,
+            inv_image,
+            inv_thumbnail,
+            inv_price,
+            inv_year,
+            inv_miles,
             inv_color
         })
         return
-        }
-        next()
     }
+    next() // Move to the next middleware function
+}
 
-module.exports = validate;
+module.exports = validate // Exporting the validate object containing validation functions

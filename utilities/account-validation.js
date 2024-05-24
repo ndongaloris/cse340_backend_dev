@@ -1,12 +1,12 @@
-const utilities = require(".")
-const { body, validationResult } = require("express-validator")
-const validate = {}
-const accountModel = require("../models/account-model")
+const utilities = require(".") // Importing utilities module
+const { body, validationResult } = require("express-validator") // Importing express-validator
+const validate = {} // Creating an object for validation functions
+const accountModel = require("../models/account-model") // Importing account model
 
 /*  **********************************
   *  Registration Data Validation Rules
   * ********************************* */
-validate.registrationRules = () => {
+validate.registrationRules = () => { // Function to define registration data validation rules
     return [
         // firstname is required and must be string
         body("account_firstname")
@@ -24,14 +24,14 @@ validate.registrationRules = () => {
             .isLength({ min: 2 })
             .withMessage("Please provide a last name."), // on error this message is sent.
     
-      // valid email is required and cannot already exist in the database
+        // valid email is required and cannot already exist in the database
         body("account_email")
             .trim()
             .isEmail()
             .normalizeEmail() // refer to validator.js docs
             .withMessage("A valid email is required.")
             .custom(async (account_email) => {
-            const emailExists = await accountModel.checkExistingEmail(account_email)
+                const emailExists = await accountModel.checkExistingEmail(account_email)
                 if (emailExists){
                     throw new Error("Email exists. Please log in or use different email")
                 }
@@ -42,20 +42,20 @@ validate.registrationRules = () => {
             .trim()
             .notEmpty()
             .isStrongPassword({
-            minLength: 12,
-            minLowercase: 1,
-            minUppercase: 1,
-            minNumbers: 1,
-            minSymbols: 1,
+                minLength: 12,
+                minLowercase: 1,
+                minUppercase: 1,
+                minNumbers: 1,
+                minSymbols: 1,
             })
             .withMessage("Password does not meet requirements."),
-        ]
-    }
+    ]
+}
 
 /* ********************************************************
  * Check data and return errors or continue to registration
  * ********************************************************/
-validate.checkRegData = async (req, res, next) => {
+validate.checkRegData = async (req, res, next) => { // Function to check registration data
     const { account_firstname, account_lastname, account_email } = req.body
     let errors = []
     errors = validationResult(req)
@@ -70,16 +70,16 @@ validate.checkRegData = async (req, res, next) => {
             account_email,
         })
         return
-        }
-        next()
     }
+    next()
+}
 
 /* **********************************
 *  Login Data Validation Rules
 * ********************************* */
-validate.loginRules = () => {
+validate.loginRules = () => { // Function to define login data validation rules
     return [    
-      // valid email is required and cannot already exist in the database
+        // valid email is required and cannot already exist in the database
         body("account_email")
             .trim()
             .isEmail()
@@ -97,7 +97,7 @@ validate.loginRules = () => {
 /* *************************************************
  * Check data and return errors or continue to login
  * ************************************************* */
-validate.checkLoginData = async (req, res, next) => {
+validate.checkLoginData = async (req, res, next) => { // Function to check login data
     const { account_email } = req.body
     let errors = []
     errors = validationResult(req)
@@ -110,9 +110,8 @@ validate.checkLoginData = async (req, res, next) => {
             account_email,
         })
         return
-        }
-        next()
     }
+    next()
+}
 
-
-module.exports = validate
+module.exports = validate // Exporting the validation object

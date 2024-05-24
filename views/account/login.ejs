@@ -1,22 +1,22 @@
-<% if (title){ %>
-    <h1><%= title %></h1>
+<% if (title){ %> <!-- Checking if the 'title' variable is defined -->
+    <h1><%= title %></h1> <!-- Displaying the title if it exists -->
 <% }else{
-    res.redirect("/")
+    res.redirect("/") <!-- Redirecting to the root URL if the 'title' variable is not defined -->
 } %>
 
-<%- messages() %>
+<%- messages() %> <!-- Displaying flash messages -->
 
-<% if (errors) { %>
-    <ul class="notice">
-<% errors.array().forEach(error => { %>
-<li><%= error.msg %></li>
-<%  }) %>
-</ul>
-<% } %>
+<% if (errors) { %> <!-- Checking if the 'errors' variable is defined -->
+    <ul class="notice"> <!-- Starting an unordered list for displaying errors -->
+<% errors.array().forEach(error => { %> <!-- Looping through each error in the 'errors' array -->
+<li><%= error.msg %></li> <!-- Displaying each error message -->
+<%  }) %> <!-- Ending the loop -->
+</ul> <!-- Closing the unordered list -->
+<% } %> <!-- Ending the conditional block for displaying errors -->
 
-<form id="loginForm" action="/account/login" method="post">
-    <label>Email:<input type="email" name="account_email" id="account_email" required value="<%=locals.account_email%>"></label>
-    <label>Password:<input type="password" name="account_password" id="account_password" required></label>
-    <button type="submit" id="loginButton">LOGIN</button>
-    <p>No account?<a href="/account/register">Sign-up</a></p>
-</form>
+<form id="loginForm" action="/account/login" method="post"> <!-- Login form starts -->
+    <label>Email:<input type="email" name="account_email" id="account_email" required value="<%=locals.account_email%>"></label> <!-- Email input field -->
+    <label>Password:<input type="password" name="account_password" id="account_password" required></label> <!-- Password input field -->
+    <button type="submit" id="loginButton">LOGIN</button> <!-- Submit button for login -->
+    <p>No account?<a href="/account/register">Sign-up</a></p> <!-- Link to registration page -->
+</form> <!-- Login form ends -->
