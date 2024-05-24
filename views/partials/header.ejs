@@ -3,8 +3,11 @@
         <a href="/" title="Return to home page">CSE Motors</a> <!-- Link to home page -->
     </span>
     <div id="tools"> <!-- Tools section starts -->
-        <a href="/account/login" title="Click to log in">My Account</a> <!-- Link to login page -->
-        <a href="/inv/" style="display: none;">Welcome <%# username %></a> <!-- Hidden link for username display -->
-        <a href="/account/login" title="Click to Log out" style="display: none;">Log Out</a> <!-- Hidden link for logout -->
+        <% if (locals.loggedin) { %>
+            <a href="/inv/" >Welcome <%- locals.accountData.account_firstname %></a><!--  Hidden link for username display -->
+            <a href="/account/login" title="Click to Log out" id="loggedIn">Log Out</a> <!-- Hidden link for logout -->
+        <% } else { %>
+                <a href="/account/login" title="Click to log in" id="loggedOut">My Account</a> 
+        <% } %>
     </div> <!-- Tools section ends -->
 </header> <!-- Header section ends -->

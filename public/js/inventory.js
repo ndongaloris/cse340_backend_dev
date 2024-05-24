@@ -1,3 +1,5 @@
+'use strict';
+
 // Get a list of items in inventory based on the classification_id 
 let classificationList = document.querySelector("#classificationList");
 
@@ -22,7 +24,6 @@ classificationList.addEventListener("change", function () {
     }); 
 });
 
-'use strict';
 
 // Build inventory items into HTML table components and inject into DOM 
 function buildInventoryList(data) { 
@@ -45,3 +46,5 @@ function buildInventoryList(data) {
     // Display the contents in the Inventory Management view 
     inventoryDisplay.innerHTML = dataTable; // Inject the HTML table into the DOM
 }
+
+
