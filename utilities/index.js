@@ -109,7 +109,7 @@ Util.BuildSingleView = async function(data) { // Function to build single view o
         // Add the vehicle details section
         SingleView += "<div id=SingleViewInfo>";
         SingleView += "<h3>" + vehicle.inv_make + ' '+ vehicle.inv_model + " Details </h3>";
-        SingleView += "<p><strong>Price:</strong> " + ' ' + vehicle.inv_price + "</p>";
+        SingleView += "<p><strong>Price:$</strong> " + ' ' + Math.round(vehicle.inv_price, 2) + "</p>";
         SingleView += "<p><strong>Description:</strong> " + ' ' + vehicle.inv_description + "</p>";
         SingleView += "<p><strong>Color:</strong> " + ' ' + vehicle.inv_color + "</p>";
         SingleView += "<p><strong>Miles:</strong> " + ' ' + vehicle.inv_miles + "</p>";

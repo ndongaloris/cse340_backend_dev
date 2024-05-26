@@ -73,16 +73,14 @@ app.use(cookieParser());
 // Middleware to check JWT token validity
 app.use(utilities.checkJWTToken);
 
-// Middleware to check account type and restrict access
-app.use("/inv", (req, res, next) => {
+const auth = (req, res, next) => {
   if (res.locals.accountData && (res.locals.accountData.account_type === "Employee" || res.locals.accountData.account_type === "Admin")) {   // If account type is allowed, proceed to the next middleware or route
     next();
   } else {
     // If account type is not allowed, render login page with appropriate message
     res.redirect("account/login")
   }
-});
-
+};
 /* ***********************
  * Routes
  *************************/
@@ -99,7 +97,7 @@ app.get("/", utilities.handleErrors(baseController.buildHome));
 
 // Inventory routes
 // Mount inventory routes under the '/inv' prefix
-app.use("/inv", inventoryRoute);
+app.use("/inv", inventoryRoute, auth);
 // Route for intentional server error
 app.use("/serverError", inventoryRoute);
 
