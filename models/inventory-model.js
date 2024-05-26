@@ -59,10 +59,8 @@ async function checkExistingClassification(classification_name){
 async function getInventory(vehicleId) {
   try{
     // Performing a database query to retrieve inventory data for a specific vehicle ID
-    const data = await pool.query(
-      `SELECT * FROM public.inventory 
-        WHERE inv_id = ${vehicleId}`
-    );
+    const sql = `SELECT * FROM public.inventory WHERE inv_id = $1`;
+    const data = await pool.query(sql, [vehicleId]);
     // Returning the resulting rows from the query
     return data.rows;
   } catch (error) {

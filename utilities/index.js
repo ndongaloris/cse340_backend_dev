@@ -109,10 +109,10 @@ Util.BuildSingleView = async function(data) { // Function to build single view o
         // Add the vehicle details section
         SingleView += "<div id=SingleViewInfo>";
         SingleView += "<h3>" + vehicle.inv_make + ' '+ vehicle.inv_model + " Details </h3>";
-        SingleView += "<p><strong>Price:$</strong> " + ' ' + Math.round(vehicle.inv_price, 2) + "</p>";
+        SingleView += "<p><strong>Price:</strong> " + ' $' + Intl.NumberFormat('en-US').format(vehicle.inv_price) + "</p>";
         SingleView += "<p><strong>Description:</strong> " + ' ' + vehicle.inv_description + "</p>";
         SingleView += "<p><strong>Color:</strong> " + ' ' + vehicle.inv_color + "</p>";
-        SingleView += "<p><strong>Miles:</strong> " + ' ' + vehicle.inv_miles + "</p>";
+        SingleView += "<p><strong>Miles:</strong> " + ' ' + Intl.NumberFormat('en-US').format(vehicle.inv_miles) + "</p>";
         SingleView += "</div>";
     });
     // Close the single view container
@@ -128,6 +128,17 @@ Util.BuildSingleView = async function(data) { // Function to build single view o
  **************************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
 
+/* ****************************************
+ *  Check Login
+ * ************************************ */
+Util.checkLogin = (req, res, next) => { // Function to check if user is logged in
+    if (res.locals.loggedin) { // If user is logged in
+        next() // Move to next middleware
+        } else { // If user is not logged in
+        req.flash("notice", "Please log in.") // Set flash message
+        return res.redirect("/account/login") // Redirect to login page
+        }
+}
 /* ****************************************
 * Middleware to check token validity
 **************************************** */
@@ -151,16 +162,5 @@ Util.checkJWTToken = (req, res, next) => {
         }
 }
 
-/* ****************************************
- *  Check Login
- * ************************************ */
-Util.checkLogin = (req, res, next) => { // Function to check if user is logged in
-    if (res.locals.loggedin) { // If user is logged in
-        next() // Move to next middleware
-        } else { // If user is not logged in
-        req.flash("notice", "Please log in.") // Set flash message
-        return res.redirect("/account/login") // Redirect to login page
-        }
-}
 
 module.exports = Util // Exporting the Util object containing utility functions

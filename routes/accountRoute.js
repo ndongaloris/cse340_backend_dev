@@ -6,8 +6,11 @@ const utilities = require("../utilities"); // Importing utility functions
 const regValidate = require('../utilities/account-validation'); // Importing validation functions
 const { render } = require("ejs"); // Importing EJS rendering
 
+
 // Route to handle requests for building login view
-router.get("/login", utilities.handleErrors(accountController.buildLogin));
+router.get(
+    "/login", 
+    utilities.handleErrors(accountController.buildLogin));
 
 // Route to handle requests for building registration view
 router.get("/register", utilities.handleErrors(accountController.buildRegister));
@@ -21,7 +24,7 @@ router.get("/",
 router.get("/update", utilities.handleErrors(accountController.buildUpdateAccount))
 
 
-router.get("/logout", accountController.logout)
+router.get("/logout", utilities.handleErrors(accountController.logout));
 
 // Process the registration data
 router.post(
