@@ -4,6 +4,7 @@
     res.redirect("/") <!-- Redirecting to the root URL if the 'title' variable is not defined -->
 } %>
 
+
 <%- messages() %> <!-- Displaying flash messages -->
 
 <% if (errors) { %> <!-- Checking if the 'errors' variable is defined -->
@@ -14,5 +15,10 @@
 </ul> <!-- Closing the unordered list -->
 <% } %> <!-- Ending the conditional block for displaying errors -->
 
+<h2>Welcome <%- locals.accountData.account_firstname %></h2>
+<p><a href="/account/update">Edit Account Information</a></p>
+<% if (locals.accountData.account_type === "Employee" ||locals.accountData.account_type === "Admin") {%>
+    <h3>Inventory Management</h3>
+    <p><a href="/inv">Manage Inventory</a></p>
+<%} %>
 
-<script src="../../js/script.js"></script>

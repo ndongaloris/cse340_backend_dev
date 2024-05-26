@@ -61,5 +61,66 @@ async function checkExistingPassword(account_email){
     }
 }
 
+/* ***************************
+ *  Update Inventory Data
+ * ************************** */
+async function updateAccount(
+    account_firstname, 
+    account_lastname, 
+    account_email,
+    account_id,
+  ) {
+    try {
+      // Performing a database query to update inventory data
+      const sql =
+        "UPDATE public.account SET account_firstname = $1, account_lastname = $2, account_email = $3 WHERE account_id = $4 RETURNING *";
+      const data = await pool.query(sql, [
+        account_firstname, 
+        account_lastname, 
+        account_email,
+        account_id,
+      ]);
+      return data.rows[0];
+    } catch (error) {
+      // Error handling: logging the error to the console
+      console.error("updateAccount error: " + error);
+    }
+  }
+async function updatePassword(
+    account_password,
+    account_id,
+  ) {
+    try {
+      // Performing a database query to update inventory data
+      const sql =
+        "UPDATE public.account SET account_password = $1 WHERE account_id = $2 RETURNING *";
+      const data = await pool.query(sql, [
+        account_password,
+        account_id,
+      ]);
+      return data.rows[0];
+    } catch (error) {
+      // Error handling: logging the error to the console
+      console.error("updateAccount error: " + error);
+    }
+  }
+
+  async function getAccountByID(account_id){
+    try {
+        const sql = "SELECT account_id, account_firstname, account_lastname, account_email, account_type, account_password FROM public.account WHERE account_id = $1 RETURNING *"
+        const account = await pool.query(sql, [account_id])
+        return account.rows[0]
+    } catch (error) {
+        // Returning error message if an error occurs
+        return error.message
+    }
+}
 // Exporting functions to be used in other modules
-module.exports = {registerAccount, getAccountByEmail,checkExistingEmail, checkExistingPassword}
+module.exports = {
+    registerAccount, 
+    getAccountByEmail,
+    checkExistingEmail, 
+    checkExistingPassword, 
+    updateAccount,
+    updatePassword,
+    getAccountByID}

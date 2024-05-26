@@ -18,6 +18,8 @@ router.get("/",
         utilities.handleErrors(accountController.buildAccount) // Handling errors in building account view
         );
 
+router.get("/update", utilities.handleErrors(accountController.buildUpdateAccount))
+
 // Process the registration data
 router.post(
     "/register",
@@ -33,5 +35,7 @@ router.post(
     regValidate.checkLoginData, // Middleware to check login data
     utilities.handleErrors(accountController.accountLogin) // Handling errors in login process
 );
+
+router.post("/update", utilities.handleErrors(accountController.updateAccount))
 
 module.exports = router; // Exporting the router for use in other modules

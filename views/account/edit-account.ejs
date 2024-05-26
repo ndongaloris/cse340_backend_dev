@@ -1,0 +1,33 @@
+<% if (title){ %> <!-- Checking if the 'title' variable is defined -->
+    <h1><%= title %></h1> <!-- Displaying the title if it exists -->
+<% }else{
+    res.redirect("/") 
+} %>
+
+<%- messages() %> <!-- Displaying flash messages -->
+
+<% if (errors) { %> <!-- Checking if the 'errors' variable is defined -->
+    <ul class="notice"> <!-- Starting an unordered list for displaying errors -->
+    <% errors.array().forEach(error => { %> <!-- Looping through each error in the 'errors' array -->
+    <li><%= error.msg %></li> <!-- Displaying each error message -->
+    <%  }) %> <!-- Ending the loop -->
+    </ul> <!-- Closing the unordered list -->
+<% } %> <!-- Ending the conditional block for displaying errors -->
+
+<h2>Update Personal Detail</h2>
+<form action="/account/update" method="post" id="registerForm"> 
+    <label>First Name:<input type="text"  value="<%- locals.accountData.account_firstname %>" name="account_firstname" id="accountFirstname" required></label> <!-- First name input field -->
+    <label>Last Name:<input type="text" value="<%- locals.accountData.account_lastname %>" name="account_lastname" id="account_lastname" required></label> <!-- Last name input field -->
+    <label>Email:<input type="email"  value="<%- locals.accountData.account_email %>" name="account_email" id="account_email" required></label> <!-- Email input field -->
+
+    <button type="submit">Update</button> <!-- Submit button for registration -->
+</form> 
+<h2>Update Password</h2>
+<form action="/account/update" method="post" id="registerForm"> 
+    <span>*Note the Original Password will be changed</span>
+    
+    <label>Password:<input type="password" name="account_password" id="account_password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required></label> <!-- Password input field with pattern validation -->
+    <span>Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</span> <!-- Password strength requirement -->
+    
+    <button type="submit">Change Password</button> <!-- Submit button for registration -->
+</form> 

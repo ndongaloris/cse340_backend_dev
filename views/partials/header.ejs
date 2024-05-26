@@ -4,7 +4,7 @@
     </span>
     <div id="tools"> <!-- Tools section starts -->
         <% if (locals.loggedin) { %>
-            <a href="/inv/" >Welcome <%- locals.accountData.account_firstname %></a><!--  Hidden link for username display -->
+            <a href="/account/" >Welcome <%- locals.accountData.account_firstname %></a><!--  Hidden link for username display -->
             <a href="/account/login" title="Click to Log out" id="loggedIn">Log Out</a> <!-- Hidden link for logout -->
         <% } else { %>
                 <a href="/account/login" title="Click to log in" id="loggedOut">My Account</a> 

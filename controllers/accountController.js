@@ -31,7 +31,7 @@ async function buildAccount(req, res, next){
     let nav = await utilities.getNav(); // Getting navigation data
     // Rendering the account view template with title, navigation data, and no errors
     res.render("account/account", {
-        title: "My Account",
+        title: "Account Management",
         nav,
         errors: null,
     })
@@ -126,4 +126,58 @@ async function registerAccount(req, res) {
     }
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccount }; // Exporting controller functions
+async function buildUpdateAccount(req, res){
+    let nav = await utilities.getNav();
+    
+    res.render("account/edit-account",{
+        title: "Edit Account",
+        nav,
+        errors: null,
+    })
+}
+
+async function updateAccount(req, res){
+    const {account_firstname, account_lastname, account_email, account_password} = req.body;
+    const account_id = parseInt(res.locals.accountData.account_id);
+    let accountData = "";
+    if (!account_password){
+        const updateResult = await accountModel.updateAccount(
+            account_firstname, 
+            account_lastname, 
+            account_email,
+            account_id,
+        )
+
+        if(updateResult){
+
+            req.flash(
+                "notice",
+                `Congratulations, your information has been updated.`
+            );
+            accountData = await accountModel.getAccountByEmail(account_email);
+        }
+
+    }else{
+        // Comparing the provided password with the hashed password in the database
+        let hashedPassword = await bcrypt.hashSync(account_password, 10);
+        const updateResult = await accountModel.updatePassword(hashedPassword, account_id);
+        if(updateResult){
+
+            req.flash(
+                "notice",
+                `Congratulations, your information has been updated.`
+            );
+            accountData = updateResult;
+        }
+    }
+
+        const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET);
+        // Setting the token in a cookie
+        if(process.env.NODE_ENV === 'development') {
+            res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 });
+        } else {
+            res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 });
+        }
+    res.redirect("/account");
+}
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccount, buildUpdateAccount, updateAccount }; // Exporting controller functions
