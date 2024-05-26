@@ -2,6 +2,8 @@ const utilities = require("../utilities"); // Importing the utilities module
 const accountModel = require("../models/account-model"); // Importing the account model
 const bcrypt = require("bcryptjs"); // Importing bcrypt for password hashing
 const jwt = require("jsonwebtoken"); // Importing jsonwebtoken for generating tokens
+const { cookie } = require("express-validator");
+const cookieParser = require("cookie-parser");
 require ("dotenv").config(); // Loading environment variables
 
 // Function to render the login view
@@ -180,4 +182,9 @@ async function updateAccount(req, res){
         }
     res.redirect("/account");
 }
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccount, buildUpdateAccount, updateAccount }; // Exporting controller functions
+
+async function logout(req, res, next){
+    res.clearCookie('jwt');
+    res.redirect("/");
+}
+module.exports = { logout, buildLogin, buildRegister, registerAccount, accountLogin, buildAccount, buildUpdateAccount, updateAccount }; // Exporting controller functions

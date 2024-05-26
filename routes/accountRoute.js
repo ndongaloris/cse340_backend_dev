@@ -20,6 +20,9 @@ router.get("/",
 
 router.get("/update", utilities.handleErrors(accountController.buildUpdateAccount))
 
+
+router.get("/logout", accountController.logout)
+
 // Process the registration data
 router.post(
     "/register",
