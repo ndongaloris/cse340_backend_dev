@@ -163,6 +163,29 @@ async function deleteInventoryItem(inv_id) {
   }
 }
 
+/* ***************************
+ *  Add Review Inventory Item
+ * ************************** */
+async function addReview(review_description, date, inv_id, account_id){
+  try{
+    const sql = `INSERT INTO review (review_text, review_date, inv_id, account_id) VALUES( $1, $2, $3, $4) RETURNING*`;
+    const data = await pool.query(sql, [review_description, date, inv_id, account_id]);
+    return data;
+  }catch (error) {
+    new Error("Add review to the inventory error");
+  }
+}
+
+async function getReviews(account_id){
+  try{
+    const sql = `SELECT * FROM public.review WHERE account_id = $1 RETURNING*`;
+    const data = await pool.query(sql, [account_id]);
+    return data.rows;
+  }catch{
+    new Error ("get review failed.");
+  }
+}
+
 // Exporting functions to be used in other modules
 module.exports = {
   getClassifications, 
@@ -172,5 +195,6 @@ module.exports = {
   addVehicle, 
   checkExistingClassification,
   updateInventory, 
-  deleteInventoryItem
+  deleteInventoryItem,
+  addReview
 };

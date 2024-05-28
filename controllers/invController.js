@@ -151,6 +151,12 @@ invCont.BuildSinglePageId = async function(req, res, next) {
     const data = await invModel.getInventory(vehicleId);
     // Building a single view of the inventory data
     const singleView = await utilities.BuildSingleView(data);
+
+    const client_id = res.locals.accountData.account_id;
+
+    const getReviews = await invModel.addReview(client_id)
+
+    const reviews = await utilities.reviewInventoryVew(getReviews);
     // Getting navigation data
     let nav = await utilities.getNav();
     // Generating a title for the single view based on the vehicle details
@@ -160,6 +166,8 @@ invCont.BuildSinglePageId = async function(req, res, next) {
         title: className, // Title for the page
         nav, // Navigation data
         singleView, // Single view data
+        inv_id: vehicleId,
+        reviews,
     });
 };
 
@@ -319,6 +327,19 @@ invCont.deleteInventory = async function (req, res, next) {
         const itemName = `${inv_make} ${inv_model}`;
         req.flash("notice", "Sorry, the delete failed.");
         res.redirect("inv/delete/inv_id");
+    }
+}
+
+invCont.addReview = async function (req, res,next){
+    const { review_description,inv_id, account_id} = req.body;
+    const date = new Date();
+    const reviewData = await invModel.addReview(review_description, date, parseInt(inv_id), parseInt(account_id));
+    if (reviewData){
+        req.flash("notice", "Review Added");
+        res.redirect(`/inv/detail/${inv_id}`);
+    }else{
+        req.flash("notice", "Adding review failed");
+        res.redirect(`/inv/detail/${inv_id}`);
     }
 }
 

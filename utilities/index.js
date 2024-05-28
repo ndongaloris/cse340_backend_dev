@@ -162,5 +162,12 @@ Util.checkJWTToken = (req, res, next) => {
         }
 }
 
+Util.reviewInventoryVew = (review) => {
+    return `<section>
+                <h3>${account_firstname}<p>wrote on the ${review.review_date}</p><h3>
+                <hr>
+                <p>${review.review_text}</p>
+            </section>`
+}
 
 module.exports = Util // Exporting the Util object containing utility functions

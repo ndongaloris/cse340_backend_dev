@@ -62,4 +62,9 @@ router.post("/update/", utilities.handleErrors(invController.updateInventory));
 // Route to process deleting inventory
 router.post("/delete/", utilities.handleErrors(invController.deleteInventory));
 
+//route to add review to the inventory
+router.post("/add-review",
+    utilities.handleErrors(invController.addReview)
+)
+
 module.exports = router; // Exporting the router for use in other modules
