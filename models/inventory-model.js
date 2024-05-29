@@ -176,10 +176,11 @@ async function addReview(review_description, date, inv_id, account_id){
   }
 }
 
-async function getReviews(account_id){
+async function getReviews(vehicleId){
   try{
-    const sql = `SELECT * FROM public.review WHERE account_id = $1`;
-    const data = await pool.query(sql, [account_id]);
+    const sql = `SELECT account_firstname, review_date, review_text FROM public.review AS rv JOIN public.account AS ac 
+    ON rv.account_id = ac.account_id WHERE rv.inv_id = $1;`;
+    const data = await pool.query(sql, [vehicleId]);
     return data.rows;
   }catch{
     new Error ("get review failed.");

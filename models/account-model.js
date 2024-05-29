@@ -115,12 +115,25 @@ async function updatePassword(
         return error.message
     }
 }
+
+async function getInventoryByReview(account_id){
+  try{
+    const sql = `SELECT review_id, inv_year, inv_make, inv_model, review_date FROM public.review AS rv JOIN public.inventory AS iv 
+    ON rv.inv_id = iv.inv_id WHERE rv.account_id = $1`;
+    const data = await pool.query(sql, [account_id]);
+    return data.rows;
+  }catch(error){
+      return error.message;
+  }
+}
 // Exporting functions to be used in other modules
 module.exports = {
-    registerAccount, 
-    getAccountByEmail,
-    checkExistingEmail, 
-    checkExistingPassword, 
-    updateAccount,
-    updatePassword,
-    getAccountByID}
+  registerAccount, 
+  getAccountByEmail,
+  checkExistingEmail, 
+  checkExistingPassword, 
+  updateAccount,
+  updatePassword,
+  getAccountByID,
+  getInventoryByReview,
+}

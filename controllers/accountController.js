@@ -31,11 +31,15 @@ async function buildRegister(req, res, next) {
 // Function to render the account view
 async function buildAccount(req, res, next){
     let nav = await utilities.getNav(); // Getting navigation data
+    const account_id = res.locals.accountData.account_id;
+    const data = await accountModel.getInventoryByReview(account_id);
+    const MyReviews = await utilities.manageReviews(data);
     // Rendering the account view template with title, navigation data, and no errors
     res.render("account/account", {
         title: "Account Management",
         nav,
         errors: null,
+        MyReviews,
     })
 }
 

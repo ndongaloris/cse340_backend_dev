@@ -152,15 +152,9 @@ invCont.BuildSinglePageId = async function(req, res, next) {
     const data = await invModel.getInventory(vehicleId);
     // Building a single view of the inventory data
     const singleView = await utilities.BuildSingleView(data);
-    try{
-        const client_id = res.locals.accountData.account_id;
-        const client_name = res.locals.accountData.account_firstname;
-        const getReviews = await invModel.getReviews(client_id)
-        reviews = await utilities.reviewInventoryVew(getReviews, client_name);
-    }catch{
-        console.log("something is wrong with the reviews");
-        reviews = null;
-    }
+    const getReviews = await invModel.getReviews(vehicleId)
+    reviews = await utilities.reviewInventoryVew(getReviews);
+   
 
     // Getting navigation data
     let nav = await utilities.getNav();

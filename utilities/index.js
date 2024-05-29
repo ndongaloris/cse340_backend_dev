@@ -162,11 +162,11 @@ Util.checkJWTToken = (req, res, next) => {
         }
 }
 
-Util.reviewInventoryVew = (review, account_firstname) => {
+Util.reviewInventoryVew = (review) => {
     let reviewList;
     reviewList = "<ul>"
     review.forEach(element => {
-        reviewList += `<li><p><strong>${account_firstname}</strong> wrote on the ${element.review_date}<p>
+        reviewList += `<li><p><strong>${element.account_firstname}</strong> wrote on the ${element.review_date}<p>
             <hr>
             <p>${element.review_text}</p>
         </li>`
@@ -174,6 +174,23 @@ Util.reviewInventoryVew = (review, account_firstname) => {
     })
     reviewList += "</ul>";
     return reviewList;
+}
+
+Util.manageReviews = (data) =>{
+    let dataTable = "<table><thead>"; 
+    dataTable += "<tr><th>My reviews</th><td>&nbsp;</td><td>&nbsp;</td></tr>"; // Table header row
+    dataTable += "</thead>"; 
+    // Set up the table body 
+    dataTable += "<tbody>"; 
+    // Iterate over all vehicles in the array and put each in a row 
+    data.forEach(function (element) { // Loop through each vehicle data
+        // Populate table rows with vehicle information and action links
+        dataTable += `<tr><td>Reviewed the ${element.inv_year} ${element.inv_make} ${element.inv_model} on ${element.review_date}</td>`; // Vehicle make and model
+        dataTable += `<td><a href='/inv/review/edit/${element.review_id}' title='Click to update'>Modify</a></td>`; // Link to edit the vehicle
+        dataTable += `<td><a href='/inv/review/delete/${element.review_id}' title='Click to delete'>Delete</a></td></tr>`; // Link to delete the vehicle
+    }); 
+    dataTable += "</tbody></table>"; 
+    return dataTable;
 }
 
 module.exports = Util // Exporting the Util object containing utility functions
