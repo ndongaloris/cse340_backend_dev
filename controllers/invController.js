@@ -93,7 +93,18 @@ invCont.addVehicle = async function(req, res, next){
     // Getting navigation data
     let nav = await utilities.getNav();
     // Extracting vehicle details from request body
-    const {classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color} = req.body;
+    const {
+        classification_id, 
+        inv_make,
+        inv_model, 
+        inv_description, 
+        inv_image, 
+        inv_thumbnail, 
+        inv_price, 
+        inv_year, 
+        inv_miles, 
+        inv_color
+    } = req.body;
     // Adding new vehicle to inventory
     const newVehicle = await invModel.addVehicle(
         classification_id,
@@ -154,7 +165,6 @@ invCont.BuildSinglePageId = async function(req, res, next) {
     const singleView = await utilities.BuildSingleView(data);
     const getReviews = await invModel.getReviews(vehicleId)
     reviews = await utilities.reviewInventoryVew(getReviews);
-   
 
     // Getting navigation data
     let nav = await utilities.getNav();
@@ -238,7 +248,19 @@ invCont.updateInventory = async function (req, res, next) {
     // Getting navigation data
     let nav = await utilities.getNav();
     // Extracting inventory details from request body
-    const { inv_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id } = req.body;
+    const { 
+        inv_id, 
+        inv_make, 
+        inv_model, 
+        inv_description, 
+        inv_image, 
+        inv_thumbnail, 
+        inv_price, 
+        inv_year, 
+        inv_miles, 
+        inv_color, 
+        classification_id 
+    } = req.body;
     // Updating inventory data
     const updateResult = await invModel.updateInventory(
         inv_id,  
@@ -332,7 +354,11 @@ invCont.deleteInventory = async function (req, res, next) {
 invCont.addReview = async function (req, res,next){
     const { review_description,inv_id, account_id} = req.body;
     const date = new Date();
-    const reviewData = await invModel.addReview(review_description, date, parseInt(inv_id), parseInt(account_id));
+    const reviewData = await invModel.addReview(review_description, 
+                                                date, 
+                                                parseInt(inv_id), 
+                                                parseInt(account_id)
+                                                );
     if (reviewData){
         req.flash("notice", "Review Added");
         res.redirect(`/inv/detail/${inv_id}`);

@@ -191,4 +191,46 @@ async function logout(req, res, next){
     res.clearCookie('jwt');
     res.redirect("/");
 }
-module.exports = { logout, buildLogin, buildRegister, registerAccount, accountLogin, buildAccount, buildUpdateAccount, updateAccount }; // Exporting controller functions
+
+async function editReview(req, res, next){
+    let nav = await utilities.getNav();
+    const inv_id = parseInt(req.params.inv_id)
+    const account_id = res.locals.accountData.account_id;
+    const getReview = await accountModel.getReview(account_id,inv_id);
+    const reviewText = getReview[0].review_text;
+    const review_id = getReview[0].review_id;
+    const vehicleName = `${getReview[0].inv_year} ${getReview[0].inv_make} ${getReview[0].inv_model}`;
+    const date = Date();
+    res.render("account/update-review", {
+        title: "Edit" + vehicleName,
+        nav,
+        inv_id,
+        review_id,
+        date,
+        reviewText,
+        errors: null,
+    })
+}
+
+async function UpdateReview(req, res, next){
+    const {review_text, review_id} = req.body;
+    const review_date = new Date();
+    const data = await accountModel.UpdateReview(review_text, review_date, review_id)
+    if (data){
+        res.redirect("/account")
+    }else{
+        console.log("there is a problem with the updateReview query");
+    }
+}
+module.exports = { 
+    logout, 
+    buildLogin, 
+    buildRegister, 
+    registerAccount, 
+    accountLogin, 
+    buildAccount, 
+    buildUpdateAccount, 
+    updateAccount,
+    UpdateReview,
+    editReview, 
+}; // Exporting controller functions

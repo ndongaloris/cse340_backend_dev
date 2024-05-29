@@ -186,8 +186,8 @@ Util.manageReviews = (data) =>{
     data.forEach(function (element) { // Loop through each vehicle data
         // Populate table rows with vehicle information and action links
         dataTable += `<tr><td>Reviewed the ${element.inv_year} ${element.inv_make} ${element.inv_model} on ${element.review_date}</td>`; // Vehicle make and model
-        dataTable += `<td><a href='/inv/review/edit/${element.review_id}' title='Click to update'>Modify</a></td>`; // Link to edit the vehicle
-        dataTable += `<td><a href='/inv/review/delete/${element.review_id}' title='Click to delete'>Delete</a></td></tr>`; // Link to delete the vehicle
+        dataTable += `<td><a href='/account/review/edit/${element.inv_id}' title='Click to update'>Modify</a></td>`; // Link to edit the vehicle
+        dataTable += `<td><a href='/account/review/delete/${element.inv_id}' title='Click to delete'>Delete</a></td></tr>`; // Link to delete the vehicle
     }); 
     dataTable += "</tbody></table>"; 
     return dataTable;

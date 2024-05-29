@@ -26,6 +26,8 @@ router.get("/update", utilities.handleErrors(accountController.buildUpdateAccoun
 
 router.get("/logout", utilities.handleErrors(accountController.logout));
 
+router.get("/review/edit/:inv_id", utilities.handleErrors(accountController.editReview));
+
 // Process the registration data
 router.post(
     "/register",
@@ -33,6 +35,10 @@ router.post(
     regValidate.checkRegData, // Middleware to check registration data
     utilities.handleErrors(accountController.registerAccount) // Handling errors in registration process
 );
+
+router.post(
+    "/review/edit", 
+    utilities.handleErrors(accountController.UpdateReview))
 
 // Process the login attempt
 router.post(
