@@ -162,12 +162,18 @@ Util.checkJWTToken = (req, res, next) => {
         }
 }
 
-Util.reviewInventoryVew = (review) => {
-    return `<section>
-                <h3>${account_firstname}<p>wrote on the ${review.review_date}</p><h3>
-                <hr>
-                <p>${review.review_text}</p>
-            </section>`
+Util.reviewInventoryVew = (review, account_firstname) => {
+    let reviewList;
+    reviewList = "<ul>"
+    review.forEach(element => {
+        reviewList += `<li><p><strong>${account_firstname}</strong> wrote on the ${element.review_date}<p>
+            <hr>
+            <p>${element.review_text}</p>
+        </li>`
+
+    })
+    reviewList += "</ul>";
+    return reviewList;
 }
 
 module.exports = Util // Exporting the Util object containing utility functions

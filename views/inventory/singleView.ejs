@@ -8,9 +8,11 @@
 
 <h3>Customer Reviews</h3>
 
+<%- reviews %>
+
+<h4>Add your own review</h4>
 <% if (locals.accountData && (locals.accountData.account_type === "Client")) {%>
-    <form action="/inv/add-review"  method="post" id="registerForm">
-        <p>Add your own review</p>
+    <form action="/inv/add-review"  method="post" id="vehicleForm">
         <label>Screen Name: <input type="text" name="account_firstname" value="<%- locals.accountData.account_firstname %>" readonly required></label>
         <label>Review<textarea type="text" name="review_description" required></textarea></label>
         

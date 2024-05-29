@@ -144,19 +144,24 @@ invCont.buildByClassificationId = async function (req, res, next) {
 }
 
 // Controller function to handle requests for building a single inventory page
-invCont.BuildSinglePageId = async function(req, res, next) {    
+invCont.BuildSinglePageId = async function(req, res, next) {  
+    let reviews;  
     // Extracting vehicle ID from request parameters
     const vehicleId = req.params.singleViewId;
     // Retrieving inventory data for the specified vehicle ID
     const data = await invModel.getInventory(vehicleId);
     // Building a single view of the inventory data
     const singleView = await utilities.BuildSingleView(data);
+    try{
+        const client_id = res.locals.accountData.account_id;
+        const client_name = res.locals.accountData.account_firstname;
+        const getReviews = await invModel.getReviews(client_id)
+        reviews = await utilities.reviewInventoryVew(getReviews, client_name);
+    }catch{
+        console.log("something is wrong with the reviews");
+        reviews = null;
+    }
 
-    const client_id = res.locals.accountData.account_id;
-
-    const getReviews = await invModel.addReview(client_id)
-
-    const reviews = await utilities.reviewInventoryVew(getReviews);
     // Getting navigation data
     let nav = await utilities.getNav();
     // Generating a title for the single view based on the vehicle details

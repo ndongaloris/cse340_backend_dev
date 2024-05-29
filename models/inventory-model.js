@@ -178,7 +178,7 @@ async function addReview(review_description, date, inv_id, account_id){
 
 async function getReviews(account_id){
   try{
-    const sql = `SELECT * FROM public.review WHERE account_id = $1 RETURNING*`;
+    const sql = `SELECT * FROM public.review WHERE account_id = $1`;
     const data = await pool.query(sql, [account_id]);
     return data.rows;
   }catch{
@@ -196,5 +196,6 @@ module.exports = {
   checkExistingClassification,
   updateInventory, 
   deleteInventoryItem,
-  addReview
+  addReview,
+  getReviews,
 };
