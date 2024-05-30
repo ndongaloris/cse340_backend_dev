@@ -1,0 +1,28 @@
+<% if (title){ %> <!-- Checking if the 'title' variable is defined -->
+    <h1><%= title %></h1> <!-- Displaying the title if it exists -->
+<% }else{
+    res.redirect("/") <!-- Redirecting to the root URL if the 'title' variable is not defined -->
+} %>
+
+<%- messages() %> <!-- Displaying flash messages -->
+
+<% if (errors) { %> <!-- Checking if the 'errors' variable is defined -->
+    <ul class="notice"> <!-- Starting an unordered list for displaying errors -->
+    <% errors.array().forEach(error => { %> <!-- Looping through each error in the 'errors' array -->
+    <li><%= error.msg %></li> <!-- Displaying each error message -->
+    <%  }) %> <!-- Ending the loop -->
+    </ul> <!-- Closing the unordered list -->
+<% } %> <!-- Ending the conditional block for displaying errors -->
+
+<form action="/account/review/delete"  method="post" id="vehicleForm">
+    <label>Review Date: <input type="text" name="review_date" value="<%- date %>" readonly required></label>
+    <label>Review Text: <textarea type="text" name="review_text" readonly required><%- reviewText %></textarea></label>
+    
+    <input type="hidden" name="inv_id" value="<%- inv_id %>">
+
+    <input type="hidden" name="review_id" value="<%- review_id %>">
+
+    <input type="hidden" name="account_id" value="<%- locals.accountData.account_id %>">
+
+    <button type="submit">Delete Review</button>
+</form>

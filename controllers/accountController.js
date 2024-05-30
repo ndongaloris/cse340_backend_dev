@@ -202,7 +202,7 @@ async function editReview(req, res, next){
     const vehicleName = `${getReview[0].inv_year} ${getReview[0].inv_make} ${getReview[0].inv_model}`;
     const date = Date();
     res.render("account/update-review", {
-        title: "Edit" + vehicleName,
+        title: "Edit " + vehicleName,
         nav,
         inv_id,
         review_id,
@@ -222,6 +222,35 @@ async function UpdateReview(req, res, next){
         console.log("there is a problem with the updateReview query");
     }
 }
+
+async function deleteReview(req, res, next){
+    let nav = await utilities.getNav();
+    const inv_id = parseInt(req.params.inv_id)
+    const account_id = res.locals.accountData.account_id;
+    const getReview = await accountModel.getReview(account_id,inv_id);
+    const reviewText = getReview[0].review_text;
+    const review_id = getReview[0].review_id;
+    const vehicleName = `${getReview[0].inv_year} ${getReview[0].inv_make} ${getReview[0].inv_model}`;
+    const date = Date();
+    res.render("account/delete-review", {
+        title: "Delete " + vehicleName,
+        nav,
+        inv_id,
+        review_id,
+        date,
+        reviewText,
+        errors: null,
+    })
+}
+async function DeleteReviewConfirm(req, res, next){
+    const {review_id} = req.body;
+    const data = await accountModel.deleteReview(review_id)
+    if (data){
+        res.redirect("/account")
+    }else{
+        console.log("there is a problem with the updateReview query");
+    }
+}
 module.exports = { 
     logout, 
     buildLogin, 
@@ -233,4 +262,6 @@ module.exports = {
     updateAccount,
     UpdateReview,
     editReview, 
+    deleteReview,
+    DeleteReviewConfirm,
 }; // Exporting controller functions

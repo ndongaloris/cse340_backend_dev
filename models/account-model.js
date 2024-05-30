@@ -148,6 +148,15 @@ async function UpdateReview(review_text, review_date, review_id){
     new Error(`error in the query UpdateReview ${error}`)
   }
 }
+async function deleteReview(review_id){
+  try {
+      const sql = `DELETE FROM public.review WHERE review_id = $1 RETURNING *`
+      const data = await pool.query(sql, [review_id]);
+      return data.rows[0];
+  } catch (error) {
+    new Error(`error in the query UpdateReview ${error}`)
+  }
+}
 // Exporting functions to be used in other modules
 module.exports = {
   registerAccount, 
@@ -160,4 +169,5 @@ module.exports = {
   getInventoryByReview,
   getReview,
   UpdateReview,
+  deleteReview,
 }

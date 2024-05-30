@@ -27,6 +27,7 @@ router.get("/update", utilities.handleErrors(accountController.buildUpdateAccoun
 router.get("/logout", utilities.handleErrors(accountController.logout));
 
 router.get("/review/edit/:inv_id", utilities.handleErrors(accountController.editReview));
+router.get("/review/delete/:inv_id", utilities.handleErrors(accountController.deleteReview));
 
 // Process the registration data
 router.post(
@@ -39,6 +40,9 @@ router.post(
 router.post(
     "/review/edit", 
     utilities.handleErrors(accountController.UpdateReview))
+router.post(
+    "/review/delete", 
+    utilities.handleErrors(accountController.DeleteReviewConfirm))
 
 // Process the login attempt
 router.post(
