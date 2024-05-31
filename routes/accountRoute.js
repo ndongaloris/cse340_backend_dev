@@ -38,7 +38,9 @@ router.post(
 );
 
 router.post(
-    "/review/edit", 
+    "/review/edit",
+    regValidate.reviewRules(), 
+    regValidate.checkReviewData,
     utilities.handleErrors(accountController.UpdateReview))
 router.post(
     "/review/delete", 
