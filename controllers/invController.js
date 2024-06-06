@@ -34,13 +34,10 @@ invCont.buildManagement = async function(req, res, next){
 invCont.buildAddClassification = async function(req, res, next){
     // Getting navigation data
     let nav = await utilities.getNav();
-    // Building form for adding new classification
-    const form = await utilities.buildNewClassification();
     // Rendering add classification view template
     res.render("./inventory/add-classification", {
         title : "Add New Classification", // Title of the page
         nav, // Navigation data
-        form, // Form data
         errors:null,
     })
 }

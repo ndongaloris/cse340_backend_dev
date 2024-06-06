@@ -12,6 +12,7 @@ validate.classificationRules = () => { // Defining classification data validatio
             .trim()
             .escape()
             .notEmpty()
+            .matches("^[a-zA-Z]*$")
             .isLength({ min: 3 })
             .withMessage("Please enter a classification name with at least three characters.") // Custom error message if validation fails
             .custom(async (classification_name) => { // Custom validation to check if classification already exists
@@ -23,20 +24,16 @@ validate.classificationRules = () => { // Defining classification data validatio
     ]
 }
 
-/* ******************************
- * Check data and return errors or continue to registration
- * ***************************** */
+
 validate.checkClassificationData = async (req, res, next) => { // Function to check classification data and return errors if any
     const { classification_name } = req.body
     let errors = validationResult(req)
     if (!errors.isEmpty()) { // If there are validation errors
         let nav = await utilities.getNav()
-        const form = await utilities.buildNewClassification()
         res.render("inventory/add-classification", { // Render the add classification page with errors
             errors,
             title: "Add New Classification",
             nav,
-            form,
             classification_name,
         })
         return

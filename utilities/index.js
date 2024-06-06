@@ -33,13 +33,7 @@ Util.getManagementLinks = async function(req, res, nest) { // Function to get ma
                     </div>`;
 }
 
-Util.buildNewClassification = async function(res, req, next) { // Function to build new classification form
-    return form = `<form action="/inv/add-classification" id="newClassificationForm" method="post">
-                    <h3>Classification Name</h3>
-                    <label>NAME MUST BE ALPHABETIC CHARACTERS ONLY<input type="text" name="classificationName" pattern="^[a-zA-Z]*$" required></label>
-                    <button type="submit">Add Classification</button>
-                </form>`
-}
+
 
 Util.buildClassificationList = async function (classification_id = null) { // Function to build classification dropdown list
     let data = await invModel.getClassifications() // Retrieving classification data
