@@ -44,6 +44,63 @@ validate.checkClassificationData = async (req, res, next) => { // Function to ch
 validate.inventoryRules = () => { // Defining validation rules for inventory data
     return [
         // Validation rules for various fields
+        body("classification_id")
+            .trim()
+            .escape()
+            .notEmpty()
+            .withMessage("Please select a classification"), // on error this message is sent.
+
+        body("inv_model")
+            .trim()
+            .escape()
+            .notEmpty()
+            .isLength({ min: 3 })
+            .withMessage("Please enter a model name, min 3 character."), // on error this message is sent.
+        
+            body("inv_make")
+            .trim()
+            .escape()
+            .notEmpty()
+            .isLength({ min: 3 })
+            .withMessage("Please enter a make name, min 3 character."), // on error this message is sent.
+
+        body("inv_description")
+            .trim()
+            .escape()
+            .notEmpty()
+            .isLength({ min: 10 })
+            .withMessage("Please enter a description min 10 character."),
+        
+        body("inv_price")
+            .trim()
+            .escape()
+            .notEmpty()
+            .isLength({ min: 3 })
+            .matches("^[0-9]*\.?[0-9]+$")
+            .withMessage("Please enter a valid price"),
+
+        body("inv_year")
+            .trim()
+            .escape()
+            .notEmpty()
+            .matches("^[0-9]{4}$")
+            .withMessage("Please enter a valid year"),
+
+
+        body("inv_miles")
+            .trim()
+            .escape()
+            .notEmpty()
+            .isLength({ min: 4 })
+            .matches("^[0-9]+$")
+            .withMessage("Please enter a valid mile"),
+
+        body("inv_color")
+            .trim()
+            .escape()
+            .notEmpty()
+            .isLength({ min: 3 })
+            .withMessage("Please enter a valid color"),
     ]
 }
 
@@ -67,7 +124,7 @@ validate.checkInventoryData = async (req, res, next) => { // Function to check i
             inv_price,
             inv_year,
             inv_miles,
-            inv_color
+            inv_color,
         })
         return
     }

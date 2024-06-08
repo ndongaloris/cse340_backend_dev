@@ -81,7 +81,17 @@ invCont.buildAddInventory = async function(req, res, next){
         title : "Add New Vehicle", // Title of the page
         nav, // Navigation data
         selectList, // Classification select list
-        errors:null,
+        errors: null,
+        classification_id: null,
+        inv_make: null,
+        inv_model: null,
+        inv_description: null,
+        inv_image: null,
+        inv_thumbnail: null,
+        inv_price: null,
+        inv_year: null,
+        inv_miles: null,
+        inv_color: null,
     })
 }
 
