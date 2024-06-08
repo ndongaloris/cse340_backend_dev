@@ -15,6 +15,6 @@
 <% } %>
 <form action="/inv/add-classification" id="newClassificationForm" method="post">
     <h3>Classification Name</h3>
-    <label>NAME MUST BE ALPHABETIC CHARACTERS ONLY<input type="text" name="classificationName" pattern="^[a-zA-Z]*$" required></label>
+    <label>NAME MUST BE ALPHABETIC CHARACTERS ONLY<input type="text" name="classificationName" value="<%- value %>" pattern="^[a-zA-Z]*$" required></label>
     <button type="submit">Add Classification</button>
 </form>

@@ -26,7 +26,7 @@ validate.classificationRules = () => { // Defining classification data validatio
 
 
 validate.checkClassificationData = async (req, res, next) => { // Function to check classification data and return errors if any
-    const { classification_name } = req.body
+    const { classificationName } = req.body
     let errors = validationResult(req)
     if (!errors.isEmpty()) { // If there are validation errors
         let nav = await utilities.getNav()
@@ -34,7 +34,7 @@ validate.checkClassificationData = async (req, res, next) => { // Function to ch
             errors,
             title: "Add New Classification",
             nav,
-            classification_name,
+            value: classificationName,
         })
         return
     }

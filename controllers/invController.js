@@ -1,6 +1,5 @@
 const invModel = require("../models/inventory-model"); // Importing the inventory model
 const utilities = require("../utilities/"); // Importing utilities module
-const { inventoryRules } = require("../utilities/management-validation"); // Importing inventory rules
 
 const invCont = {}; // Initializing inventory controller object
 
@@ -39,6 +38,7 @@ invCont.buildAddClassification = async function(req, res, next){
         title : "Add New Classification", // Title of the page
         nav, // Navigation data
         errors:null,
+        value: null,
     })
 }
 
